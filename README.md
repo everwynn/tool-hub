@@ -11,14 +11,14 @@ ToolHub 提供日常开发中高频使用的纯前端工具，原为 TechHub 站
 - **编码转换**：Base64 编解码、URL 编解码、进制转换、命名风格转换
 - **文本格式**：JSON 格式化、YAML ↔ JSON、Markdown 预览、文本 Diff、JSONPath 查询、CSV ↔ JSON、SQL 格式化、环境变量格式转换
 - **时间随机**：Unix 时间戳、UUID、二维码、随机密码
-- **图片工具**：AI 去水印（实验性）、图片压缩/格式转换、图片加水印、Favicon 生成、图片裁剪旋转
+- **图片工具**：图片涂抹修复（去水印）、图片压缩/格式转换、图片加水印、Favicon 生成、图片裁剪旋转
 - **安全加密**：JWT 解码、JWT 生成、AES 加解密、哈希计算
 - **运维部署**：Nginx 配置生成、Cron 解析、Docker Run 转 Compose、端口速查、chmod 权限计算、IP/CIDR 计算、cURL 转代码
 - **开发辅助**：正则测试、HTTP 状态码、颜色格式转换、CSS 生成、JSON 转 TypeScript
 
 分类与工具的映射维护在 `src/data/tools.ts`（`tools` 数组 + `categoryMeta`），首页分组、筛选、详情页徽章都由它驱动。
 
-所有工具均运行在浏览器端（Web Crypto / Canvas / WebAssembly），无需后端服务，数据不会上传服务器。
+所有工具均运行在浏览器端（Web Crypto / Canvas），无需后端服务，数据不会上传服务器。
 
 ## 页面结构
 
@@ -43,7 +43,6 @@ share-map 由 `scripts/generate-share-map.js` 在 prebuild 阶段生成，**已�
 - [Vue](https://vuejs.org/) 3 — 交互式组件
 - [Tailwind CSS](https://tailwindcss.com/) 3 — 样式框架
 - [TypeScript](https://www.typescriptlang.org/) — 类型安全
-- [onnxruntime-web](https://onnxruntime.ai/) — 浏览器端 AI 推理（AI 去水印）
 - [qrcode](https://github.com/soldair/node-qrcode) — 二维码生成
 
 ## 项目结构
@@ -52,7 +51,7 @@ share-map 由 `scripts/generate-share-map.js` 在 prebuild 阶段生成，**已�
 /
 ├── .github/workflows/
 │   └── deploy.yml       # GitHub Pages 自动部署
-├── public/              # 静态资源（favicon；public/models/*.onnx 不入库）
+├── public/              # 静态资源（favicon 等）
 ├── scripts/
 │   └── generate-share-map.js  # 生成分享 token 映射（prebuild）
 ├── src/
@@ -75,15 +74,6 @@ share-map 由 `scripts/generate-share-map.js` 在 prebuild 阶段生成，**已�
 ├── tailwind.config.mjs
 └── tsconfig.json
 ```
-
-## AI 去水印模型
-
-LaMa ONNX 模型（约 198MB）**不入库**。工具首次使用时会：
-
-1. 尝试加载 `public/models/lama_fp32.onnx`（本地存在时）
-2. 否则从 hf-mirror.com 镜像下载（浏览器缓存，后续无需重复下载）
-
-模型来源与放置方法见 `public/models/README.md`。
 
 ## 本地开发
 

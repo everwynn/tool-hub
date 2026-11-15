@@ -303,13 +303,13 @@ export const tools: Tool[] = [
     status: 'available',
   },
   {
-    name: 'AI 图片去水印（待测）',
+    name: '图片涂抹修复',
     slug: 'watermark',
     icon: '🖌️',
     category: 'image',
     categoryLabel: '图片工具',
-    desc: '基于 LaMa AI 模型，浏览器端本地修复图片水印，涂抹标记后一键去除，数据不上传',
-    tags: ['AI修复', '去水印', 'LaMa', 'Inpainting', 'ONNX'],
+    desc: '涂抹标记水印或杂物，用多尺度扩散填充自动修复，纯 Canvas 运算，无需下载模型，数据不上传',
+    tags: ['去水印', '涂抹修复', 'Inpainting', 'canvas'],
     status: 'available',
   },
   {

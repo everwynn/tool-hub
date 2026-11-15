@@ -22,6 +22,3 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-
-# 大模型文件不入库（AI 去水印模型走远程按需下载，确保仓库轻量）
-public/models/*.onnx
