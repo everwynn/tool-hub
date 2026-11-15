@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ImageCropEditor from '../../components/tools/ImageCropEditor.vue';
 import PageShareBar from '../../components/PageShareBar.vue';
 ---
-<BaseLayout title="图片裁剪旋转 - ToolHub" description="在线裁剪图片，支持 90° 旋转、水平/垂直翻转、1:1 / 16:9 等固定宽高比选区，按原图分辨率导出，浏览器本地处理">
+<BaseLayout title="图片裁剪旋转 - ToolHub" description="在线裁剪图片，支持方形与圆形裁剪、90° 旋转、水平/垂直翻转、1:1 / 16:9 等固定宽高比选区，按原图分辨率导出，浏览器本地处理">
   <article class="max-w-4xl mx-auto px-6 py-10">
     <PageShareBar client:load slug="image-crop" type="tool" />
     <header class="mb-8">
@@ -16,9 +16,9 @@ import PageShareBar from '../../components/PageShareBar.vue';
           <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">图片裁剪旋转</h1>
         </div>
       </div>
-      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">拖拽框选裁剪区域，支持 90° 旋转、水平/垂直翻转、1:1 / 4:3 / 16:9 等固定宽高比，实时显示输出像素尺寸，按原图分辨率导出 PNG / JPEG / WebP。</p>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">拖拽框选裁剪区域，支持方形与圆形裁剪、90° 旋转、水平/垂直翻转、1:1 / 4:3 / 16:9 等固定宽高比，实时显示输出像素尺寸，按原图分辨率导出 PNG / JPEG / WebP。</p>
       <div class="flex flex-wrap gap-2 mt-4">
-        {['裁剪', '旋转', '翻转', '宽高比', 'canvas'].map(s => (
+        {['裁剪', '圆形裁剪', '旋转', '翻转', '宽高比', 'canvas'].map(s => (
           <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
         ))}
       </div>

@@ -28,6 +28,7 @@ const ASPECTS = [
   { key: '9:16', label: '9:16', ratio: 9 / 16 },
 ] as const
 const aspect = ref<string>('free')
+const shape = ref<'rect' | 'circle'>('rect')
 
 // 选区（预览坐标）
 const sel = ref({ x: 0, y: 0, w: 0, h: 0 })
@@ -150,6 +151,15 @@ watch(aspect, () => {
   }
 })
 
+watch(shape, (v) => {
+  if (!work.value) return
+  if (v === 'circle' && aspect.value !== '1:1') {
+    aspect.value = '1:1' // 圆形强制正方形选区，触发 aspect watch 重置选区
+  } else {
+    render()
+  }
+})
+
 // ======================== 渲染 ========================
 
 function render() {
@@ -162,33 +172,63 @@ function render() {
   ctx.drawImage(w, 0, 0, c.width, c.height)
 
   const s = sel.value
+  const isCircle = shape.value === 'circle'
+  const cx = s.x + s.w / 2
+  const cy = s.y + s.h / 2
+  const radius = Math.min(s.w, s.h) / 2
+
   // 选区外遮罩
   ctx.save()
   ctx.fillStyle = 'rgba(15, 23, 42, 0.62)'
   ctx.beginPath()
   ctx.rect(0, 0, c.width, c.height)
-  ctx.rect(s.x, s.y, s.w, s.h)
+  if (isCircle) {
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2)
+  } else {
+    ctx.rect(s.x, s.y, s.w, s.h)
+  }
   ctx.fill('evenodd')
   ctx.restore()
 
-  // 三分参考线
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)'
-  ctx.lineWidth = 1
-  ctx.beginPath()
-  for (let i = 1; i <= 2; i++) {
-    const gx = s.x + (s.w * i) / 3
-    const gy = s.y + (s.h * i) / 3
-    ctx.moveTo(gx, s.y)
-    ctx.lineTo(gx, s.y + s.h)
-    ctx.moveTo(s.x, gy)
-    ctx.lineTo(s.x + s.w, gy)
-  }
-  ctx.stroke()
+  if (isCircle) {
+    // 圆心十字参考线
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(cx - radius, cy)
+    ctx.lineTo(cx + radius, cy)
+    ctx.moveTo(cx, cy - radius)
+    ctx.lineTo(cx, cy + radius)
+    ctx.stroke()
 
-  // 边框与四角手柄
-  ctx.strokeStyle = '#ffffff'
-  ctx.lineWidth = 2
-  ctx.strokeRect(s.x + 1, s.y + 1, s.w - 2, s.h - 2)
+    // 圆形边框
+    ctx.strokeStyle = '#ffffff'
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2)
+    ctx.stroke()
+  } else {
+    // 三分参考线
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)'
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    for (let i = 1; i <= 2; i++) {
+      const gx = s.x + (s.w * i) / 3
+      const gy = s.y + (s.h * i) / 3
+      ctx.moveTo(gx, s.y)
+      ctx.lineTo(gx, s.y + s.h)
+      ctx.moveTo(s.x, gy)
+      ctx.lineTo(s.x + s.w, gy)
+    }
+    ctx.stroke()
+
+    // 边框
+    ctx.strokeStyle = '#ffffff'
+    ctx.lineWidth = 2
+    ctx.strokeRect(s.x + 1, s.y + 1, s.w - 2, s.h - 2)
+  }
+
+  // 四角手柄（包围盒角点，两种模式共用）
   ctx.fillStyle = '#ffffff'
   const corners: [number, number][] = [
     [s.x, s.y],
@@ -351,6 +391,7 @@ function resetAll() {
   flipH.value = false
   flipV.value = false
   aspect.value = 'free'
+  shape.value = 'rect'
   rebuildWork()
 }
 
@@ -373,15 +414,25 @@ async function exportCrop() {
     sh = clamp(sh, 1, w.height - sy)
 
     const out = document.createElement('canvas')
-    out.width = sw
-    out.height = sh
+    const isCircle = shape.value === 'circle'
+    const size = Math.min(sw, sh)
+    out.width = isCircle ? size : sw
+    out.height = isCircle ? size : sh
     const ctx = out.getContext('2d')
     if (!ctx) return
     if (format.value === 'jpeg') {
       ctx.fillStyle = '#ffffff'
-      ctx.fillRect(0, 0, sw, sh)
+      ctx.fillRect(0, 0, out.width, out.height)
     }
-    ctx.drawImage(w, sx, sy, sw, sh, 0, 0, sw, sh)
+    if (isCircle) {
+      // 圆形裁剪：内切圆裁切，PNG 圆外透明，JPEG 圆外白底
+      ctx.beginPath()
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
+      ctx.clip()
+      ctx.drawImage(w, sx, sy, sw, sh, 0, 0, size, size)
+    } else {
+      ctx.drawImage(w, sx, sy, sw, sh, 0, 0, sw, sh)
+    }
 
     const mime = format.value === 'png' ? 'image/png' : format.value === 'jpeg' ? 'image/jpeg' : 'image/webp'
     const blob = await new Promise<Blob | null>((r) => out.toBlob(r, mime, quality.value / 100))
@@ -389,7 +440,7 @@ async function exportCrop() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `cropped-${sw}x${sh}.${format.value === 'jpeg' ? 'jpg' : format.value}`
+    a.download = `cropped-${out.width}x${out.height}${isCircle ? '-circle' : ''}.${format.value === 'jpeg' ? 'jpg' : format.value}`
     a.click()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
   } finally {
@@ -436,6 +487,11 @@ onBeforeUnmount(() => {
         </div>
 
         <div class="flex rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+          <button @click="shape = 'rect'" :class="['px-3 py-1.5 text-sm transition-colors', shape === 'rect' ? 'bg-accent text-white' : 'bg-white dark:bg-slate-900/50 text-gray-600 dark:text-slate-400 hover:text-accent']">方形</button>
+          <button @click="shape = 'circle'" :class="['px-3 py-1.5 text-sm transition-colors border-l border-gray-200 dark:border-slate-700', shape === 'circle' ? 'bg-accent text-white' : 'bg-white dark:bg-slate-900/50 text-gray-600 dark:text-slate-400 hover:text-accent']">圆形</button>
+        </div>
+
+        <div :class="['flex rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden', shape === 'circle' ? 'opacity-40 pointer-events-none' : '']" :title="shape === 'circle' ? '圆形裁剪固定为 1:1' : ''">
           <button
             v-for="a in ASPECTS"
             :key="a.key"
@@ -464,7 +520,7 @@ onBeforeUnmount(() => {
         ></canvas>
         <div class="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-gray-400 dark:text-slate-600">
           <span>{{ file?.name }} · 原图 {{ img.naturalWidth }}×{{ img.naturalHeight }} · {{ fmtSize(fileSize) }}</span>
-          <span class="px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">裁剪输出 {{ outputSize.w }}×{{ outputSize.h }} px</span>
+          <span class="px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">裁剪输出 {{ outputSize.w }}×{{ outputSize.h }} px{{ shape === 'circle' ? ' · 圆形' : '' }}</span>
         </div>
       </div>
 
@@ -491,7 +547,7 @@ onBeforeUnmount(() => {
           @click="exportCrop"
           :disabled="exporting"
           class="px-5 py-2 text-sm font-medium rounded-lg bg-accent text-white hover:bg-accent/90 disabled:opacity-50 transition-all"
-        >{{ exporting ? '导出中…' : `导出裁剪（${outputSize.w}×${outputSize.h}）` }}</button>
+        >{{ exporting ? '导出中…' : `导出${shape === 'circle' ? '圆形' : '裁剪'}（${outputSize.w}×${outputSize.h}）` }}</button>
       </div>
     </template>
 
@@ -501,6 +557,7 @@ onBeforeUnmount(() => {
       <ul class="text-xs text-gray-500 dark:text-slate-500 space-y-1 list-disc list-inside">
         <li>在图片任意位置拖拽可新建选区；拖动选区内部移动位置，拖动四角手柄调整大小</li>
         <li>选择固定宽高比（1:1 / 4:3 / 16:9 等）后，框选与缩放都会保持该比例；旋转或翻转后选区自动重置</li>
+        <li>圆形裁剪强制 1:1 正方形选区并生成内切圆，PNG 圆外区域透明，JPEG 自动填充白色背景</li>
         <li>导出按原图分辨率完成，与预览所见一致；全程浏览器本地处理，不上传图片</li>
       </ul>
     </div>
