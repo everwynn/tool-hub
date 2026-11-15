@@ -1,0 +1,50 @@
+---
+import shareMap from '../../data/share-map.json';
+
+export function getStaticPaths() {
+  return Object.entries(shareMap).map(([token, entry]) => ({
+    params: { token },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+// GitHub Pages 子路径部署：拼接 base 前缀（尾斜杠与 trailingSlash: 'always' 一致）
+const base = import.meta.env.BASE_URL;
+const targetPath = entry.type === 'tool' ? `${base}tools/${entry.target}/` : `${base}demos/${entry.target}/`;
+// 不重定向！用 iframe 加载目标页，URL 保持在 /s/[token]，不暴露真实地址
+---
+
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>分享 - ToolHub</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      * { margin: 0; padding: 0; }
+      html, body { height: 100%; overflow: hidden; background: #0f172a; }
+      iframe { width: 100vw; height: 100vh; border: 0; display: block; }
+      .share-loading {
+        position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+        color: #64748b; font-size: 14px; font-family: system-ui, sans-serif;
+      }
+    </style>
+    <script is:inline>
+      (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+          var el = document.getElementById('share-target');
+          var iframe = document.getElementById('share-iframe');
+          if (el && iframe) iframe.src = el.getAttribute('data-target') + '?mode=share';
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="share-target" data-target={targetPath} style="display:none"></div>
+    <div class="share-loading">加载中...</div>
+    <iframe id="share-iframe" onload="this.previousElementSibling.style.display='none'"></iframe>
+  </body>
+</html>

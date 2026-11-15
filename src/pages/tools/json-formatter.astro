@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonFormatter from '../../components/tools/JsonFormatter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="JSON 格式化工具 - ToolHub" description="格式化、压缩、转义、反转义 JSON 数据，支持错误定位和字符统计">
+  <article class="max-w-7xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="json-formatter" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">📋</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用工具</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端 · 数据不上传</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">JSON 格式化工具</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">格式化（美化）、压缩（Minify）、转义、反转义 JSON 数据。支持缩进选择、错误定位提示、字符统计和管道操作。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['格式化美化', '压缩 Minify', '转义字符串', '反转义', '错误定位', '字符统计'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <JsonFormatter client:load />
+  </article>
+</BaseLayout>

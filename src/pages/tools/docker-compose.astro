@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DockerComposeConverter from '../../components/tools/DockerComposeConverter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="Docker Run 转 Compose - ToolHub" description="粘贴 docker run 命令，自动转换为 docker-compose.yml，支持所有常用参数">
+  <article class="max-w-7xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="docker-compose" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🐳</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">Docker</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Docker Run 转 Compose</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">粘贴一条 docker run 命令（支持多行 \ 换行），自动解析所有参数并生成标准的 docker-compose.yml 文件，支持端口、环境变量、挂载卷、网络、重启策略等全部常用选项。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['-p 端口', '-e 环境变量', '-v 挂载', '--network', '--restart', '--memory', 'env-file', '下载 YAML'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <DockerComposeConverter client:load />
+  </article>
+</BaseLayout>

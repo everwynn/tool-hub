@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseConverter from '../../components/tools/BaseConverter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="进制转换 - ToolHub" description="在线数字进制转换工具，支持二进制/八进制/十进制/十六进制互转，含位图可视化和 ASCII 对照">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="base-converter" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🔢</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">进制转换</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">支持二进制、八进制、十进制、十六进制互转，直观的位图可视化、ASCII 字符对照、0~15 速查表，是调试位运算和网络协议时的实用工具。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['二进制', '八进制', '十进制', '十六进制', '位图可视化', 'ASCII 对照', '0-15 速查'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <BaseConverter client:load />
+  </article>
+</BaseLayout>

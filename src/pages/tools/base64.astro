@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Base64Codec from '../../components/tools/Base64Codec.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="Base64 编解码器 - ToolHub" description="文本与图片的 Base64 编码/解码，支持 URL Safe 模式，图片拖拽上传，一键复制">
+  <article class="max-w-5xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="base64" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🔐</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用工具</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端 · 数据不上传</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Base64 编解码器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">对文本或图片进行 Base64 编码/解码，支持 URL Safe 模式（用于 JWT / URL 参数），图片可直接拖拽上传生成 Data URI。所有操作在浏览器本地完成。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['文本编码', '文本解码', '图片转Base64', 'URL Safe', 'Unicode支持', 'Data URI'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <Base64Codec client:load />
+  </article>
+</BaseLayout>

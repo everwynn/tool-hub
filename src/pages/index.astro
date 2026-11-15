@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolsExplorer from '../components/tools/ToolsExplorer.vue';
+import { tools, availableCount, categories } from '../data/tools';
+---
+
+<BaseLayout title="ToolHub - 在线开发工具箱" description={`${availableCount} 个纯前端开发工具：Base64、JSON、正则、JWT、AES、Docker、Nginx 等，全部在浏览器本地运行，数据不上传`}>
+  <!-- Hero Section -->
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-10">
+    <div class="space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent text-sm font-medium">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        纯前端 · 零后端 · 数据不上传
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+        开发者在线工具箱
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+        {availableCount} 个常用开发工具，覆盖编码转换、格式化、安全加密、运维配置等场景。
+      </p>
+      <p class="text-sm text-gray-500 dark:text-slate-500 max-w-2xl">
+        所有工具均在浏览器本地运行，开箱即用，无需注册，不会上传任何数据到服务器。
+      </p>
+      <div class="flex flex-wrap gap-2 pt-2">
+        {categories.map((label) => (
+          <span class="px-3 py-1 text-sm rounded-full bg-white dark:bg-slate-900/50 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400">
+            {label}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具网格：搜索 + 分类 + 分页 -->
+  <section id="tools-section" class="max-w-6xl mx-auto px-6 pb-20">
+    <ToolsExplorer client:load tools={tools} pageSize={9} />
+  </section>
+</BaseLayout>

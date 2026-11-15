@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { tools, availableCount } from '../data/tools';
+
+// 按分类统计工具数量
+const categoryStats = tools.reduce<Record<string, number>>((acc, tool) => {
+  acc[tool.categoryLabel] = (acc[tool.categoryLabel] || 0) + 1;
+  return acc;
+}, {});
+
+const categoryDescs: Record<string, string> = {
+  通用: '编码转换、格式化、时间戳、UUID、Diff 对比等高频小工具',
+  运维: 'Nginx、Docker、Cron、chmod、IP 子网、端口速查等运维配置工具',
+  后端: 'JWT、SQL、JSONPath、CSV/JSON、HTTP 状态码等后端开发辅助工具',
+  安全: 'AES 加解密、哈希计算、随机密码生成等安全工具',
+  前端: '颜色格式转换、CSS 渐变与阴影生成等前端样式工具',
+};
+---
+
+<BaseLayout title="关于 - ToolHub" description="关于 ToolHub 在线开发工具箱：纯前端、零后端、数据不上传">
+  <section class="max-w-3xl mx-auto px-6 py-16">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">关于 ToolHub</h1>
+
+    <div class="prose dark:prose-invert max-w-none">
+      <p>
+        <strong>ToolHub</strong> 是一个在线开发工具箱，提供 <strong>{availableCount} 个</strong>日常开发中高频使用的纯前端工具，
+        覆盖编码转换、数据格式化、安全加密、运维配置等场景。
+      </p>
+
+      <h2>为什么是纯前端？</h2>
+      <p>
+        所有工具都运行在浏览器端（Web Crypto API、Canvas、WebAssembly 等技术），
+        <strong>无需后端服务，数据不会上传服务器</strong>。
+        这意味着你可以放心处理敏感数据（如 JWT、密钥、配置），断网、内网环境同样可用。
+      </p>
+
+      <h2>工具分类</h2>
+      <ul>
+        {Object.entries(categoryStats).map(([label, count]) => (
+          <li><strong>{label}（{count} 个）</strong> — {categoryDescs[label] || '相关开发工具'}</li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- 联系方式 -->
+    <div class="mt-12 p-6 rounded-xl bg-gray-50 dark:bg-slate-900/50 border border-gray-200 dark:border-slate-800">
+      <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-3">反馈与建议</h2>
+      <p class="text-sm text-gray-600 dark:text-slate-400 mb-3">
+        工具使用中遇到问题、或者希望新增某个工具，欢迎通过以下方式反馈：
+      </p>
+      <div class="flex flex-wrap gap-4 text-sm">
+        <a href="https://github.com/everwynn/tool-hub" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-accent-dark dark:text-accent hover:underline">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

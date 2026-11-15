@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonPath from '../../components/tools/JsonPath.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="JSON Path 查询 - ToolHub" description="在线 JSONPath 查询工具，输入 JSON 和路径表达式，实时提取节点数据">
+  <article class="max-w-5xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="json-path" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🛤️</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">后端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">JSON Path 查询</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">输入 JSON 数据和 JSONPath 表达式，实时提取匹配的节点数据，支持属性访问、数组索引、切片、通配符和递归下降。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['JSONPath', '递归下降 ..', '通配符 *', '数组切片', '属性访问'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <JsonPath client:load />
+  </article>
+</BaseLayout>

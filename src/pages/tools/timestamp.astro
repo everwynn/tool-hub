@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TimestampConverter from '../../components/tools/TimestampConverter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="Unix 时间戳转换 - ToolHub" description="实时显示当前时间戳，支持时间戳与日期字符串双向转换，多时区对照，时间偏移计算">
+  <article class="max-w-5xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="timestamp" type="tool" />
+
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🕐</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用工具</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端 · 无需后端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Unix 时间戳转换</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">
+        实时显示当前 Unix 时间戳（秒/毫秒），支持时间戳 ↔ 日期字符串双向转换，多时区对照，以及时间偏移计算。
+      </p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['实时时间戳', '时间戳→日期', '日期→时间戳', '8个时区对照', '时间偏移计算', '一键复制'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+
+    <TimestampConverter client:load />
+
+    <section class="mt-10 p-5 rounded-xl bg-gray-50 dark:bg-slate-900/50 border border-gray-200 dark:border-slate-800 text-sm text-gray-600 dark:text-slate-400">
+      <h2 class="font-semibold text-gray-800 dark:text-slate-200 mb-3">什么是 Unix 时间戳？</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="mb-2">Unix 时间戳是从 <strong class="text-gray-700 dark:text-slate-300">1970-01-01 00:00:00 UTC</strong>（Unix 纪元）起经过的秒数，是跨语言、跨平台最通用的时间表示方式。</p>
+          <ul class="space-y-1 list-disc list-inside">
+            <li>10位数字 = 秒级精度（如 <code class="text-accent">1722384000</code>）</li>
+            <li>13位数字 = 毫秒级精度（如 <code class="text-accent">1722384000000</code>）</li>
+            <li>负数 = 1970年之前的时间</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-medium text-gray-700 dark:text-slate-300 mb-2">常用语言获取时间戳</h3>
+          <div class="space-y-1.5 font-mono text-xs">
+            {[
+              ['JavaScript', 'Date.now()  // 毫秒'],
+              ['Python',     'import time; time.time()'],
+              ['Java',       'System.currentTimeMillis()'],
+              ['Go',         'time.Now().Unix()'],
+              ['MySQL',      'UNIX_TIMESTAMP()'],
+            ].map(([lang, code]) => (
+              <div class="flex gap-3">
+                <span class="text-gray-400 dark:text-slate-600 w-24 flex-shrink-0">{lang}</span>
+                <code class="text-accent">{code}</code>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

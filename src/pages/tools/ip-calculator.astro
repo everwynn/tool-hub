@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IpCalculator from '../../components/tools/IpCalculator.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="IP 子网计算器 - ToolHub" description="在线 IP/CIDR 子网计算器，输入 IP 和前缀，自动计算网络地址、广播地址、可用主机范围">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="ip-calculator" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🌐</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">运维</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">IP/CIDR 子网计算器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">输入 IP 地址和 CIDR 前缀，自动计算网络地址、广播地址、子网掩码、可用主机范围，二进制可视化，附常见子网速查表。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['CIDR', '子网掩码', '网络地址', '广播地址', '可用主机范围', '二进制可视化'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <IpCalculator client:load />
+  </article>
+</BaseLayout>

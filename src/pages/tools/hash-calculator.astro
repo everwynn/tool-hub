@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HashCalculator from '../../components/tools/HashCalculator.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="哈希计算器 - ToolHub" description="在线计算 MD5 / SHA-1 / SHA-256 / SHA-512 哈希值，支持文本和文件，全部本地计算">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="hash-calculator" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">#️⃣</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800">安全</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端 · 数据不上传</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">哈希计算器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">一次性计算 MD5 / SHA-1 / SHA-256 / SHA-384 / SHA-512 全部哈希值，支持文本输入和文件校验，全部使用 Web Crypto API 在浏览器本地运算。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['MD5', 'SHA-1', 'SHA-256', 'SHA-384', 'SHA-512', '文件校验', '大写输出'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <HashCalculator client:load />
+  </article>
+</BaseLayout>

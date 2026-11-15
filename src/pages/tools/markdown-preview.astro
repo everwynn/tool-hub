@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MarkdownPreview from '../../components/tools/MarkdownPreview.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="Markdown 预览器 - ToolHub" description="左侧输入 Markdown，右侧实时渲染预览，支持表格、代码块、GFM 语法">
+  <article class="max-w-7xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="markdown-preview" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">📝</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">写作工具</span>
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">纯前端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Markdown 预览器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">左侧输入 Markdown，右侧实时渲染预览。支持标题、粗体、斜体、删除线、代码块、表格、有序/无序列表、引用、链接等 GFM 常用语法。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['实时预览', '代码高亮', '表格', 'GFM', '字数统计', '一键复制'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <MarkdownPreview client:load />
+  </article>
+</BaseLayout>

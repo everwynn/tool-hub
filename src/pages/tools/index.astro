@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolsExplorer from '../../components/tools/ToolsExplorer.vue';
+import { tools, availableCount } from '../../data/tools';
+---
+
+<BaseLayout title="在线工具 - ToolHub">
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-8">
+    <!-- 标题 -->
+    <div class="space-y-3 mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent text-sm font-medium">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        纯前端工具，零后端，开箱即用
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">在线工具箱</h1>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">
+        常用开发工具集合，全部运行在浏览器端，无需后端服务，数据不上传。
+        目前共 <strong class="text-accent-dark dark:text-accent">{availableCount}</strong> 个工具可用，
+        <strong class="text-gray-500 dark:text-slate-500">{tools.length - availableCount}</strong> 个正在开发中。
+      </p>
+    </div>
+
+    <!-- Vue 交互区：搜索 + 分页 + 卡片列表 -->
+    <ToolsExplorer client:load tools={tools} pageSize={9} />
+
+    <!-- 底部说明 -->
+    <div class="mt-10 p-4 rounded-xl bg-accent/5 border border-accent/15 text-sm text-gray-600 dark:text-slate-400 flex items-start gap-3">
+      <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span>所有工具均在浏览器本地运行，<strong class="text-gray-700 dark:text-slate-300">不会上传任何数据到服务器</strong>，可放心使用。更多工具持续开发中，欢迎提需求。</span>
+    </div>
+  </section>
+</BaseLayout>
