@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ImageWatermark from '../../components/tools/ImageWatermark.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="图片加水印 - ToolHub" description="在线给图片添加文字或 Logo 水印，支持拖拽定位、九宫格对齐、旋转、透明度、平铺模式，浏览器本地处理不上传">
+  <article class="max-w-4xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="image-watermark" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">💧</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">图片加水印</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">在浏览器本地给图片添加文字或 Logo 水印，支持拖拽定位、九宫格快速对齐、旋转角度、透明度调节与平铺模式，按原始分辨率导出 PNG / JPEG / WebP。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['水印', '文字水印', 'Logo', '透明度', 'canvas'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <ImageWatermark client:load />
+  </article>
+</BaseLayout>

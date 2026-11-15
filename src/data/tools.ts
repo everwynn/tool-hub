@@ -355,6 +355,36 @@ export const tools: Tool[] = [
     tags: ['JWT', '签发', 'HS256', 'HMAC', 'Token'],
     status: 'available',
   },
+  {
+    name: '图片加水印',
+    slug: 'image-watermark',
+    icon: '💧',
+    category: 'common',
+    categoryLabel: '通用',
+    desc: '浏览器本地给图片添加文字或 Logo 水印，支持拖拽定位、九宫格对齐、旋转、透明度与平铺模式',
+    tags: ['水印', '文字水印', 'Logo', '透明度', 'canvas'],
+    status: 'available',
+  },
+  {
+    name: 'Favicon 生成器',
+    slug: 'favicon-generator',
+    icon: '🌟',
+    category: 'common',
+    categoryLabel: '通用',
+    desc: '上传一张图片，一键生成 favicon.ico 与 16～512px PNG 全套网站图标，附 HTML 引用代码',
+    tags: ['favicon', 'ICO', '网站图标', 'PNG', 'apple-touch-icon'],
+    status: 'available',
+  },
+  {
+    name: '图片裁剪旋转',
+    slug: 'image-crop',
+    icon: '✂️',
+    category: 'common',
+    categoryLabel: '通用',
+    desc: '在线裁剪图片，支持 90° 旋转、水平/垂直翻转、自由或固定宽高比选区，实时预览导出',
+    tags: ['裁剪', '旋转', '翻转', '宽高比', 'canvas'],
+    status: 'available',
+  },
 ];
 
 export const availableCount = tools.filter((t) => t.status === 'available').length;

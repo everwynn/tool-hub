@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaviconGenerator from '../../components/tools/FaviconGenerator.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="Favicon 生成器 - ToolHub" description="上传图片一键生成 favicon.ico 与 16～512px PNG 全套网站图标，含 HTML head 引用代码，浏览器本地处理">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="favicon-generator" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🌟</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Favicon 生成器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">上传一张图片，自动生成包含 16/32/48 多尺寸的 favicon.ico 与 16～512px PNG 套件，附 HTML 引用代码，全部在浏览器本地完成。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['favicon', 'ICO', '网站图标', 'PNG', 'apple-touch-icon'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <FaviconGenerator client:load />
+  </article>
+</BaseLayout>

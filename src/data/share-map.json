@@ -59,6 +59,11 @@
     "target": "env-converter",
     "title": "env-converter"
   },
+  "60rsx0q5": {
+    "type": "tool",
+    "target": "favicon-generator",
+    "title": "favicon-generator"
+  },
   "31h8xpsf": {
     "type": "tool",
     "target": "hash-calculator",
@@ -73,6 +78,16 @@
     "type": "tool",
     "target": "image-compressor",
     "title": "image-compressor"
+  },
+  "r4z641k2": {
+    "type": "tool",
+    "target": "image-crop",
+    "title": "image-crop"
+  },
+  "asqhflbu": {
+    "type": "tool",
+    "target": "image-watermark",
+    "title": "image-watermark"
   },
   "azhlja84": {
     "type": "tool",
