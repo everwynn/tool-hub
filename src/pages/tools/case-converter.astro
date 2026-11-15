@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseConverter from '../../components/tools/CaseConverter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="命名风格转换器 - ToolHub" description="camelCase / PascalCase / snake_case / kebab-case / CONSTANT_CASE 等命名风格在线互转，自动识别输入风格，纯本地处理">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="case-converter" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🔤</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">通用</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">命名风格转换器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">粘贴任意命名的标识符，实时转换为 camelCase、PascalCase、snake_case、CONSTANT_CASE、kebab-case 等 8 种常见风格，自动识别输入风格并展示分词结果。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['命名规范', 'camelCase', 'snake_case', 'kebab-case', 'PascalCase'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <CaseConverter client:load />
+  </article>
+</BaseLayout>

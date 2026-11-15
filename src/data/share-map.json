@@ -14,6 +14,11 @@
     "target": "base64",
     "title": "base64"
   },
+  "drrgaqtr": {
+    "type": "tool",
+    "target": "case-converter",
+    "title": "case-converter"
+  },
   "f2hievzv": {
     "type": "tool",
     "target": "chmod",
@@ -93,6 +98,11 @@
     "type": "tool",
     "target": "jwt-decoder",
     "title": "jwt-decoder"
+  },
+  "icg0eb8g": {
+    "type": "tool",
+    "target": "jwt-generator",
+    "title": "jwt-generator"
   },
   "gddrfjac": {
     "type": "tool",

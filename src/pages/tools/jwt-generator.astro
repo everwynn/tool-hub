@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JwtGenerator from '../../components/tools/JwtGenerator.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="JWT 生成器 - ToolHub" description="浏览器本地签发 JWT，支持 HS256/384/512 HMAC 签名，可视化编辑 Payload，密钥不上传，与 JWT 解码器成对使用">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="jwt-generator" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">🎫</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">后端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">JWT 生成器</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">浏览器本地签发 JWT，支持 HS256 / HS384 / HS512 签名，可视化编辑 Payload 并自动解析 iat / exp 时间字段，密钥全程不上传，可与 JWT 解码器配合验证。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['JWT', '签发', 'HS256', 'HMAC', 'Token'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <JwtGenerator client:load />
+  </article>
+</BaseLayout>

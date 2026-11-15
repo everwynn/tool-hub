@@ -335,6 +335,26 @@ export const tools: Tool[] = [
     tags: ['图片压缩', 'WebP', 'JPEG', 'PNG', 'canvas'],
     status: 'available',
   },
+  {
+    name: '命名风格转换器',
+    slug: 'case-converter',
+    icon: '🔤',
+    category: 'common',
+    categoryLabel: '通用',
+    desc: 'camelCase / PascalCase / snake_case / kebab-case / CONSTANT_CASE 等命名风格互转，自动识别输入风格',
+    tags: ['命名规范', 'camelCase', 'snake_case', 'kebab-case', 'PascalCase'],
+    status: 'available',
+  },
+  {
+    name: 'JWT 生成器',
+    slug: 'jwt-generator',
+    icon: '🎫',
+    category: 'backend',
+    categoryLabel: '后端',
+    desc: '浏览器本地签发 JWT，支持 HS256/384/512 签名，可视化编辑 Payload，与 JWT 解码器成对使用',
+    tags: ['JWT', '签发', 'HS256', 'HMAC', 'Token'],
+    status: 'available',
+  },
 ];
 
 export const availableCount = tools.filter((t) => t.status === 'available').length;
