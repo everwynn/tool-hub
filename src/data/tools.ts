@@ -305,6 +305,36 @@ export const tools: Tool[] = [
     tags: ['AI修复', '去水印', 'LaMa', 'Inpainting', 'ONNX'],
     status: 'available',
   },
+  {
+    name: 'JSON 转 TypeScript',
+    slug: 'json-to-ts',
+    icon: '🧩',
+    category: 'frontend',
+    categoryLabel: '前端',
+    desc: '粘贴 JSON 自动生成 TypeScript interface/type，支持嵌套对象、数组元素合并、联合类型与可选字段推断',
+    tags: ['JSON', 'TypeScript', 'interface', '类型推断'],
+    status: 'available',
+  },
+  {
+    name: 'cURL 转代码',
+    slug: 'curl-converter',
+    icon: '💻',
+    category: 'backend',
+    categoryLabel: '后端',
+    desc: '粘贴 cURL 命令，一键转换为 fetch / axios / Python / Go 代码，自动解析 Header、Body、认证与表单参数',
+    tags: ['cURL', 'fetch', 'axios', 'Python', 'Go'],
+    status: 'available',
+  },
+  {
+    name: '图片压缩/格式转换',
+    slug: 'image-compressor',
+    icon: '🖼️',
+    category: 'common',
+    categoryLabel: '通用',
+    desc: '浏览器本地压缩图片，支持 WebP / JPEG / PNG 转换、质量调节与尺寸缩放，数据不上传',
+    tags: ['图片压缩', 'WebP', 'JPEG', 'PNG', 'canvas'],
+    status: 'available',
+  },
 ];
 
 export const availableCount = tools.filter((t) => t.status === 'available').length;

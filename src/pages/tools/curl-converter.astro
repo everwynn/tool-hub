@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CurlConverter from '../../components/tools/CurlConverter.vue';
+import PageShareBar from '../../components/PageShareBar.vue';
+---
+<BaseLayout title="cURL 转代码 - ToolHub" description="在线将 cURL 命令转换为 JavaScript fetch、axios、Python requests、Go net/http 代码，自动解析 Header、Body、认证与表单参数">
+  <article class="max-w-3xl mx-auto px-6 py-10">
+    <PageShareBar client:load slug="curl-converter" type="tool" />
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-3xl">💻</span>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">后端</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">cURL 转代码</h1>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">粘贴 cURL 命令，一键转换为 fetch / axios / Python / Go 代码，自动解析请求方法、Header、Body、Basic 认证与表单参数，浏览器本地转换。</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {['cURL', 'fetch', 'axios', 'Python', 'Go'].map(s => (
+          <span class="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700">{s}</span>
+        ))}
+      </div>
+    </header>
+    <CurlConverter client:load />
+  </article>
+</BaseLayout>
