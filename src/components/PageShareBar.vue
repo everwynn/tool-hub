@@ -24,7 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // withDefaults 不能引用本地变量，默认返回链接在 computed 中归底
-const backHref = computed(() => props.backUrl ?? `${BASE}tools/`)
+// 默认返回首页工具箱总览锚点（原 /tools/ 列表页已下线）
+const backHref = computed(() => props.backUrl ?? `${BASE}#tool-catalog`)
 
 // SSR 安全：初始值为空，客户端挂载后填充
 const siteOrigin = ref('')

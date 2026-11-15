@@ -1,34 +1,25 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ToolsExplorer from '../../components/tools/ToolsExplorer.vue';
-import { tools, availableCount } from '../../data/tools';
+// 该页已下线：原「全部工具」列表页与首页工具箱总览功能重复，
+// 保留本页仅作老链接保底，自动跳转到首页工具箱总览锚点。
+const BASE = import.meta.env.BASE_URL;
+const target = `${BASE}#tool-catalog`;
 ---
-
-<BaseLayout title="在线工具 - ToolHub">
-  <section class="max-w-6xl mx-auto px-6 pt-16 pb-8">
-    <!-- 标题 -->
-    <div class="space-y-3 mb-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent text-sm font-medium">
-        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-        纯前端工具，零后端，开箱即用
-      </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">在线工具箱</h1>
-      <p class="text-gray-600 dark:text-slate-400 max-w-2xl">
-        常用开发工具集合，全部运行在浏览器端，无需后端服务，数据不上传。
-        目前共 <strong class="text-accent-dark dark:text-accent">{availableCount}</strong> 个工具可用，
-        <strong class="text-gray-500 dark:text-slate-500">{tools.length - availableCount}</strong> 个正在开发中。
-      </p>
-    </div>
-
-    <!-- Vue 交互区：搜索 + 分页 + 卡片列表 -->
-    <ToolsExplorer client:load tools={tools} pageSize={9} />
-
-    <!-- 底部说明 -->
-    <div class="mt-10 p-4 rounded-xl bg-accent/5 border border-accent/15 text-sm text-gray-600 dark:text-slate-400 flex items-start gap-3">
-      <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-      </svg>
-      <span>所有工具均在浏览器本地运行，<strong class="text-gray-700 dark:text-slate-300">不会上传任何数据到服务器</strong>，可放心使用。更多工具持续开发中，欢迎提需求。</span>
-    </div>
-  </section>
-</BaseLayout>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <title>全部工具 - ToolHub</title>
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p style="font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; padding: 64px 24px; text-align: center; color: #6b7280; font-size: 14px; line-height: 2;">
+      工具箱已迁移至首页<br />
+      <a href={target} style="color: #059669;">正在跳转…点此手动前往</a>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo 方案对比 · ToolHub</title>
+<style>
+  :root {
+    --accent: #10b981;
+    --accent-dark: #059669;
+    --text: #111827;
+    --text-2: #374151;
+    --text-3: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f8fafb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--text); padding: 48px 24px 80px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- 页头 ---------- */
+  .page-head { margin-bottom: 36px; }
+  .page-head h1 { font-size: 26px; letter-spacing: -.4px; }
+  .page-head p { margin-top: 8px; font-size: 14px; color: var(--text-3); line-height: 1.8; max-width: 760px; }
+  .page-head .criteria { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .criteria span {
+    font-size: 12px; color: var(--text-2); background: #fff; border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 999px;
+  }
+
+  /* ---------- 方案卡 ---------- */
+  .option {
+    background: #fff; border: 1px solid var(--border); border-radius: 16px;
+    padding: 26px 28px 28px; margin-bottom: 26px;
+  }
+  .option.recommend { border-color: rgba(16,185,129,.5); box-shadow: 0 0 0 3px rgba(16,185,129,.08); }
+  .opt-head { display: flex; align-items: center; gap: 10px; }
+  .opt-head h2 { font-size: 18px; letter-spacing: -.2px; }
+  .tag {
+    font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+    background: #f1f5f9; color: var(--text-3); border: 1px solid var(--border);
+  }
+  .tag.rec { background: rgba(16,185,129,.1); color: var(--accent-dark); border-color: rgba(16,185,129,.35); }
+  .tag.warn { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+  .desc { margin-top: 10px; font-size: 13px; color: var(--text-3); line-height: 1.75; max-width: 720px; }
+
+  /* ---------- Header 实景 ---------- */
+  .demos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  .demo-label { font-size: 11px; color: var(--text-3); margin: 0 0 6px 2px; letter-spacing: .3px; }
+  .site-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 20px; border-radius: 12px;
+    background: #fff; border: 1px solid var(--border);
+  }
+  .site-header.on-dark { background: #0f172a; border-color: #1e293b; }
+  .brand { display: flex; align-items: center; gap: 9px; color: var(--accent); }
+  .brand-name { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -.3px; }
+  .site-header.on-dark .brand-name { color: #fff; }
+  .nav { display: flex; gap: 22px; }
+  .nav span { font-size: 13px; color: var(--text-2); }
+  .site-header.on-dark .nav span { color: #cbd5e1; }
+  .nav .on { color: var(--accent-dark); }
+
+  /* ---------- 尺寸阶梯 + 标签页模拟 ---------- */
+  .meta-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; margin-top: 20px; align-items: start; }
+  .sizes { display: flex; align-items: flex-end; gap: 22px; color: var(--accent); padding-top: 4px; }
+  .sz { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .sz .glyph { display: flex; align-items: center; justify-content: center; height: 64px; }
+  .sz small { font-size: 10px; color: var(--text-3); letter-spacing: .2px; }
+  .tabs { display: flex; flex-direction: column; gap: 8px; }
+  .tab-strip { display: inline-flex; gap: 3px; align-self: flex-start; }
+  .tab {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px 7px 9px; border-radius: 9px 9px 0 0; font-size: 11.5px;
+    background: #fff; border: 1px solid var(--border); color: var(--text-2);
+    border-bottom: none;
+  }
+  .tabstrip-wrap { border-radius: 0 10px 10px 10px; background: #fff; border: 1px solid var(--border); height: 22px; }
+  .tab.dark { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+  .tabstrip-wrap.dark { background: #0f172a; border-color: #334155; }
+  .tab .fav { width: 16px; height: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--accent); }
+
+  .note { margin-top: 16px; font-size: 12px; color: var(--text-3); line-height: 1.7; border-top: 1px dashed var(--border); padding-top: 12px; }
+
+  @media (max-width: 860px) {
+    .demos, .meta-row { grid-template-columns: 1fr; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <h1>Logo 方案对比 · ToolHub</h1>
+    <p>
+      每个方案展示四组场景：Header 实景（浅色 / 深色）、品牌图标尺寸阶梯（16→64px）、浏览器标签页 favicon 模拟（浅色 / 深色）。
+      评估重点：<strong>「工具集合」语义是否一眼可读</strong>、小尺寸是否清晰、与站点绿色视觉是否协调。
+    </p>
+    <div class="criteria">
+      <span>16px 可辨识</span><span>语义直白</span><span>与现有绿色协调</span><span>可延展为 favicon</span><span>不改名称</span>
+    </div>
+  </header>
+
+  <!-- ================= 现状 ================= -->
+  <section class="option">
+    <div class="opt-head">
+      <span class="tag warn">建议替换</span>
+      <h2>现状：播放圆圈（play-circle）</h2>
+    </div>
+    <p class="desc">
+      圆形轮廓 + 播放三角是媒体播放器语义，与「工具箱」无关联；同时 <code>public/favicon.svg</code> 里残留的是紫色「P」方块，
+      与站点绿色主题不搭、与 Header 图标也不一致。
+    </p>
+    <div class="demos">
+      <div>
+        <div class="demo-label">浅色 Header</div>
+        <div class="site-header">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">深色 Header</div>
+        <div class="site-header on-dark">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div>
+        <div class="demo-label">尺寸阶梯</div>
+        <div class="sizes">
+          <div class="sz"><div class="glyph"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></div><small>16</small></div>
+          <div class="sz"><div class="glyph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></div><small>24</small></div>
+          <div class="sz"><div class="glyph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></div><small>32</small></div>
+          <div class="sz"><div class="glyph"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></div><small>48</small></div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">标签页模拟</div>
+        <div class="tabs">
+          <div><div class="tab-strip"><span class="tab"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap"></div></div>
+          <div><div class="tab-strip"><span class="tab dark"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6"><circle cx="12" cy="12" r="9"/><path d="M14.75 11.17l-3.2-2.13A1 1 0 0010 9.87v4.26a1 1 0 001.55.83l3.2-2.13a1 1 0 000-1.66z" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap dark"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">16px 下播放三角已经很难辨认，且语义误导（媒体站）。favicon 还是紫色 P，与主题色不一致。</div>
+  </section>
+
+  <!-- ================= 方案 A ================= -->
+  <section class="option recommend">
+    <div class="opt-head">
+      <span class="tag rec">推荐</span>
+      <h2>方案 A：模块矩阵</h2>
+    </div>
+    <p class="desc">
+      2×2 圆角方块，第四块用虚线表示「持续新增的工具」——语义即「多个工具的集合」，
+      与首页「分类总览卡」的圆角方块是同一套视觉语言；几何极简，16px 下依然清晰。
+    </p>
+    <div class="demos">
+      <div>
+        <div class="demo-label">浅色 Header</div>
+        <div class="site-header">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="3" y="13" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="13" y="13" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="13.8" y="3.8" width="6.4" height="6.4" rx="1.9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.6 2.1" opacity=".55"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">深色 Header</div>
+        <div class="site-header on-dark">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="3" y="13" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="13" y="13" width="8" height="8" rx="2.2" fill="currentColor"/>
+              <rect x="13.8" y="3.8" width="6.4" height="6.4" rx="1.9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.6 2.1" opacity=".55"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div>
+        <div class="demo-label">尺寸阶梯</div>
+        <div class="sizes">
+          <div class="sz"><div class="glyph"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2" opacity=".35"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div><small>16 favicon 简化版</small></div>
+          <div class="sz"><div class="glyph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="3" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13.8" y="3.8" width="6.4" height="6.4" rx="1.9" stroke="#10b981" stroke-width="1.6" stroke-dasharray="2.6 2.1" opacity=".55"/></svg></div><small>24</small></div>
+          <div class="sz"><div class="glyph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="3" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13.8" y="3.8" width="6.4" height="6.4" rx="1.9" stroke="#10b981" stroke-width="1.6" stroke-dasharray="2.6 2.1" opacity=".55"/></svg></div><small>32</small></div>
+          <div class="sz"><div class="glyph"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="3" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13" y="13" width="8" height="8" rx="2.2" fill="#10b981"/><rect x="13.8" y="3.8" width="6.4" height="6.4" rx="1.9" stroke="#10b981" stroke-width="1.6" stroke-dasharray="2.6 2.1" opacity=".55"/></svg></div><small>48</small></div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">标签页模拟</div>
+        <div class="tabs">
+          <div><div class="tab-strip"><span class="tab"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="#10b981"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#10b981" opacity=".35"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#10b981"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap"></div></div>
+          <div><div class="tab-strip"><span class="tab dark"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="#10b981"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#10b981" opacity=".35"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#10b981"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap dark"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">favicon 用简化版（四块实心、右上淡化），16px 下不呈现虚线细节；语义与「工具箱总览」直接呼应。</div>
+  </section>
+
+  <!-- ================= 方案 B ================= -->
+  <section class="option">
+    <div class="opt-head">
+      <span class="tag">备选</span>
+      <h2>方案 B：工具箱</h2>
+    </div>
+    <p class="desc">
+      最直白的「工具箱」图形：箱体 + 提手 + 锁扣。语义零成本理解，但线条细节在 16px 下会损失，favicon 需要单独简化。
+    </p>
+    <div class="demos">
+      <div>
+        <div class="demo-label">浅色 Header</div>
+        <div class="site-header">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="9" width="18" height="11" rx="2.5"/>
+              <path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/>
+              <path d="M10 13.5h4"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">深色 Header</div>
+        <div class="site-header on-dark">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="9" width="18" height="11" rx="2.5"/>
+              <path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/>
+              <path d="M10 13.5h4"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div>
+        <div class="demo-label">尺寸阶梯</div>
+        <div class="sizes">
+          <div class="sz"><div class="glyph"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/></svg></div><small>16 favicon 简化版</small></div>
+          <div class="sz"><div class="glyph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/><path d="M10 13.5h4"/></svg></div><small>24</small></div>
+          <div class="sz"><div class="glyph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/><path d="M10 13.5h4"/></svg></div><small>32</small></div>
+          <div class="sz"><div class="glyph"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/><path d="M10 13.5h4"/></svg></div><small>48</small></div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">标签页模拟</div>
+        <div class="tabs">
+          <div><div class="tab-strip"><span class="tab"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap"></div></div>
+          <div><div class="tab-strip"><span class="tab dark"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M8.5 9V7.6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V9"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap dark"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">16px 下需去掉锁扣横线、加粗描边，否则细节会糊成一团灰。</div>
+  </section>
+
+  <!-- ================= 方案 C ================= -->
+  <section class="option">
+    <div class="opt-head">
+      <span class="tag">备选</span>
+      <h2>方案 C：枢纽节点</h2>
+    </div>
+    <p class="desc">
+      中心节点 + 三个卫星点，对应「Hub（枢纽）」字面语义。图形独特不易撞车，但对「工具」这一功能没有表达力，偏抽象。
+    </p>
+    <div class="demos">
+      <div>
+        <div class="demo-label">浅色 Header</div>
+        <div class="site-header">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <circle cx="12" cy="4.8" r="1.9" fill="currentColor"/>
+              <circle cx="5" cy="18.2" r="1.9" fill="currentColor"/>
+              <circle cx="19" cy="18.2" r="1.9" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">深色 Header</div>
+        <div class="site-header on-dark">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <circle cx="12" cy="4.8" r="1.9" fill="currentColor"/>
+              <circle cx="5" cy="18.2" r="1.9" fill="currentColor"/>
+              <circle cx="19" cy="18.2" r="1.9" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div>
+        <div class="demo-label">尺寸阶梯</div>
+        <div class="sizes">
+          <div class="sz"><div class="glyph"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="4.8" r="2.2" fill="#10b981"/><circle cx="5" cy="18.2" r="2.2" fill="#10b981"/><circle cx="19" cy="18.2" r="2.2" fill="#10b981"/><circle cx="12" cy="12" r="3" fill="#10b981"/></svg></div><small>16</small></div>
+          <div class="sz"><div class="glyph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="4.8" r="1.9" fill="#10b981"/><circle cx="5" cy="18.2" r="1.9" fill="#10b981"/><circle cx="19" cy="18.2" r="1.9" fill="#10b981"/><circle cx="12" cy="12" r="2.7" fill="#10b981"/></svg></div><small>24</small></div>
+          <div class="sz"><div class="glyph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="4.8" r="1.9" fill="#10b981"/><circle cx="5" cy="18.2" r="1.9" fill="#10b981"/><circle cx="19" cy="18.2" r="1.9" fill="#10b981"/><circle cx="12" cy="12" r="2.7" fill="#10b981"/></svg></div><small>32</small></div>
+          <div class="sz"><div class="glyph"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="4.8" r="1.9" fill="#10b981"/><circle cx="5" cy="18.2" r="1.9" fill="#10b981"/><circle cx="19" cy="18.2" r="1.9" fill="#10b981"/><circle cx="12" cy="12" r="2.7" fill="#10b981"/></svg></div><small>48</small></div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">标签页模拟</div>
+        <div class="tabs">
+          <div><div class="tab-strip"><span class="tab"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="4.8" r="2.2" fill="#10b981"/><circle cx="5" cy="18.2" r="2.2" fill="#10b981"/><circle cx="19" cy="18.2" r="2.2" fill="#10b981"/><circle cx="12" cy="12" r="3" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap"></div></div>
+          <div><div class="tab-strip"><span class="tab dark"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 7.2v2.3M9.8 13.9l-3.2 2.6M14.2 13.9l3.2 2.6" stroke="#10b981" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="4.8" r="2.2" fill="#10b981"/><circle cx="5" cy="18.2" r="2.2" fill="#10b981"/><circle cx="19" cy="18.2" r="2.2" fill="#10b981"/><circle cx="12" cy="12" r="3" fill="#10b981"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap dark"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">小尺寸下中心与卫星点容易粘连，16px 版加大了点的半径、缩短了连线。</div>
+  </section>
+
+  <!-- ================= 方案 D ================= -->
+  <section class="option">
+    <div class="opt-head">
+      <span class="tag">备选</span>
+      <h2>方案 D：T 徽章</h2>
+    </div>
+    <p class="desc">
+      绿色渐变圆角方块 + 白色「T」字母标。品牌感最强、favicon 最稳（字母标在任何尺寸都成立），但没有表达「工具」语义，
+      且与「播放键 / 应用图标」类通用做法接近，辨识度依赖长期使用。
+    </p>
+    <div class="demos">
+      <div>
+        <div class="demo-label">浅色 Header</div>
+        <div class="site-header">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <defs><linearGradient id="t-grad-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs>
+              <rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-1)"/>
+              <path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">深色 Header</div>
+        <div class="site-header on-dark">
+          <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <defs><linearGradient id="t-grad-2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs>
+              <rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-2)"/>
+              <path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/>
+            </svg>
+            <span class="brand-name">ToolHub</span>
+          </div>
+          <nav class="nav"><span>首页</span><span class="on">全部工具</span><span>关于</span></nav>
+        </div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div>
+        <div class="demo-label">尺寸阶梯</div>
+        <div class="sizes">
+          <div class="sz"><div class="glyph"><svg width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-3)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></div><small>16</small></div>
+          <div class="sz"><div class="glyph"><svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-4)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></div><small>24</small></div>
+          <div class="sz"><div class="glyph"><svg width="32" height="32" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-5)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></div><small>32</small></div>
+          <div class="sz"><div class="glyph"><svg width="48" height="48" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-6)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></div><small>48</small></div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label">标签页模拟</div>
+        <div class="tabs">
+          <div><div class="tab-strip"><span class="tab"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-7)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap"></div></div>
+          <div><div class="tab-strip"><span class="tab dark"><span class="fav"><svg width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="t-grad-8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><rect x="1.5" y="1.5" width="21" height="21" rx="6" fill="url(#t-grad-8)"/><path d="M7.4 8.2h9.2M12 8.2v8.4" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>ToolHub - 在线开发工具箱</span></div><div class="tabstrip-wrap dark"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">字母标在 16px 下最稳定；但如果未来有其他「Hub」站统一品牌，T 字母容易与 TechHub 等混淆。</div>
+  </section>
+
+</div>
+</body>
+</html>

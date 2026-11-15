@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolHub 首页改版设计稿 · 方案 A</title>
+<style>
+  :root {
+    --accent: #10b981;
+    --accent-dark: #059669;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-2: #6b7280;
+    --text-3: #9ca3af;
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- 导航 ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { height: 64px; display: flex; align-items: center; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; }
+  .logo-dot { width: 26px; height: 26px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; }
+  .nav-links { margin-left: auto; display: flex; gap: 28px; font-size: 14px; color: var(--text-2); }
+  .nav-links .active { color: var(--text); font-weight: 600; }
+  .theme-pill { margin-left: 28px; width: 54px; height: 26px; border-radius: 999px; background: #f3f4f6; border: 1px solid var(--border); display: flex; align-items: center; padding: 2px; }
+  .theme-pill i { width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; font-size: 10px; font-style: normal; }
+
+  /* ---------- Hero（居中单栏，无悬浮部件） ---------- */
+  .hero { padding-top: 64px; padding-bottom: 8px; }
+  .hero-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+
+  /* 常用链接行（搜索框下方，轻量灰字，融入文字流） */
+  .quick-links { margin-top: 13px; font-size: 12.5px; color: var(--text-3); }
+  .quick-links a { color: var(--text-2); text-decoration: none; margin: 0 2px; cursor: pointer; transition: color .15s; }
+  .quick-links a:hover { color: var(--accent-dark); }
+  .quick-links .sep { margin: 0 6px; color: var(--border); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.25); color: var(--accent-dark);
+  }
+  .badge .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(16,185,129,.18); }
+  h1 { font-size: 44px; line-height: 1.15; letter-spacing: -0.5px; margin: 18px 0 14px; }
+  .hero-sub { font-size: 17px; color: var(--text-2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+  .hero-sub b { color: var(--accent-dark); font-weight: 600; }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+  .stat { font-size: 13px; color: var(--text-3); }
+  .stat b { display: block; font-size: 20px; color: var(--text); font-weight: 700; letter-spacing: -0.3px; }
+  .stat span { display: block; margin-top: 2px; }
+
+  /* 大搜索框 */
+  .search-wrap { margin: 26px auto 0; max-width: 560px; position: relative; text-align: left; }
+  .search-wrap svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--text-3); }
+  .search-wrap input {
+    width: 100%; padding: 13px 74px 13px 44px; font-size: 14.5px;
+    border: 1px solid var(--border); border-radius: 12px; outline: none; background: #fff;
+    color: var(--text);
+  }
+  .search-wrap input::placeholder { color: var(--text-3); }
+  .search-wrap input:focus { border-color: rgba(16,185,129,.6); box-shadow: 0 0 0 3px rgba(16,185,129,.12); }
+  .kbd { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text-3); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; background: var(--bg-soft); }
+
+  /* ---------- 分类总览 ---------- */
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin: 44px 0 16px; }
+  .section-head h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+  .section-head span { font-size: 13px; color: var(--text-3); }
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cat-card {
+    border: 1px solid var(--border); border-radius: 14px; padding: 16px 16px 14px; background: #fff;
+    cursor: pointer; transition: all .15s ease; position: relative;
+  }
+  .cat-card:hover { border-color: rgba(16,185,129,.5); box-shadow: 0 6px 20px rgba(16,185,129,.08); transform: translateY(-1px); }
+  .cat-card.demo-hover { border-color: rgba(16,185,129,.5); box-shadow: 0 6px 20px rgba(16,185,129,.08); transform: translateY(-1px); }
+  .cat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .cat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; }
+  .ic-emerald { background: #ecfdf5; } .ic-blue { background: #eff6ff; } .ic-amber { background: #fffbeb; }
+  .ic-pink { background: #fdf2f8; } .ic-red { background: #fef2f2; } .ic-purple { background: #f5f3ff; } .ic-cyan { background: #ecfeff; }
+  .cat-count { font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid; }
+  .cc-emerald { color: #047857; background: #ecfdf5; border-color: #a7f3d0; }
+  .cc-blue { color: #1d4ed8; background: #eff6ff; border-color: #bfdbfe; }
+  .cc-amber { color: #b45309; background: #fffbeb; border-color: #fde68a; }
+  .cc-pink { color: #be185d; background: #fdf2f8; border-color: #fbcfe8; }
+  .cc-red { color: #b91c1c; background: #fef2f2; border-color: #fecaca; }
+  .cc-purple { color: #6d28d9; background: #f5f3ff; border-color: #ddd6fe; }
+  .cc-cyan { color: #0e7490; background: #ecfeff; border-color: #a5f3fc; }
+  .cat-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+  .cat-tools { font-size: 12px; color: var(--text-3); line-height: 1.6; }
+  .cat-arrow { position: absolute; right: 14px; bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0; transition: opacity .15s; }
+  .cat-card:hover .cat-arrow, .cat-card.demo-hover .cat-arrow { opacity: 1; }
+
+  /* ---------- 分组工具列表 ---------- */
+  .group { margin-top: 34px; }
+  .group-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .group-head .g-emoji { font-size: 18px; }
+  .group-head h3 { font-size: 15.5px; font-weight: 700; }
+  .group-head .g-count { font-size: 12px; color: var(--text-3); }
+  .group-head::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 6px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; }
+  .tool-card {
+    display: flex; align-items: center; gap: 11px;
+    border: 1px solid var(--border); border-radius: 11px; background: #fff;
+    padding: 12px 14px; cursor: pointer; transition: all .15s ease;
+  }
+  .tool-card:hover { border-color: rgba(16,185,129,.5); box-shadow: 0 4px 14px rgba(16,185,129,.07); }
+  .t-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--bg-soft); border: 1px solid #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .t-body { min-width: 0; }
+  .t-name { font-size: 13.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-desc { font-size: 11.5px; color: var(--text-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* 底部提示 */
+  .footer-note {
+    margin: 42px 0 64px; padding: 14px 18px; border-radius: 12px;
+    background: rgba(16,185,129,.05); border: 1px solid rgba(16,185,129,.15);
+    font-size: 13px; color: var(--text-2); display: flex; gap: 10px; align-items: flex-start;
+  }
+  .footer-note em { font-style: normal; color: var(--accent); }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 960px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .tool-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 34px; }
+  }
+  @media (max-width: 620px) {
+    .cat-grid { grid-template-columns: 1fr; }
+    .tool-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav>
+  <div class="container nav-inner">
+    <div class="logo"><span class="logo-dot">⌘</span>ToolHub</div>
+    <div class="nav-links">
+      <span class="active">首页</span><span>全部工具</span><span>关于</span>
+    </div>
+    <div class="theme-pill"><i>☀</i></div>
+  </div>
+</nav>
+
+<!-- Hero（居中单栏） -->
+<section class="container hero">
+  <div class="hero-inner">
+    <div class="badge"><span class="pulse"></span>纯前端 · 零后端 · 数据不上传</div>
+    <h1>在线工具箱</h1>
+    <p class="hero-sub">
+      <b>37 个工具</b> · <b>7 大分类</b>，覆盖编码转换、文本处理、图片、安全、运维等场景，全部在浏览器本地运行。
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><b>37</b><span>可用工具</span></div>
+      <div class="stat"><b>7</b><span>个分类</span></div>
+      <div class="stat"><b>0</b><span>数据上传</span></div>
+      <div class="stat"><b>100%</b><span>本地运行</span></div>
+    </div>
+    <div class="search-wrap">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input type="text" placeholder="搜索 37 个工具，如 JSON、Base64、图片…">
+      <span class="kbd">⌘K</span>
+    </div>
+    <div class="quick-links">
+      常用：<a>JSON 格式化</a><span class="sep">·</span><a>Base64 编解码</a><span class="sep">·</span><a>JWT 解码</a><span class="sep">·</span><a>时间戳转换</a><span class="sep">·</span><a>正则测试</a><span class="sep">·</span><a>图片压缩</a>
+    </div>
+  </div>
+</section>
+
+<!-- 分类总览 -->
+<section class="container">
+  <div class="section-head"><h2>工具箱总览</h2><span>点击分类快速筛选</span></div>
+  <div class="cat-grid">
+    <div class="cat-card demo-hover">
+      <div class="cat-top"><div class="cat-icon ic-emerald">📦</div><span class="cat-count cc-emerald">4 个工具</span></div>
+      <div class="cat-name">编码转换</div>
+      <div class="cat-tools">Base64 · URL · 进制 · 命名风格</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-blue">📝</div><span class="cat-count cc-blue">8 个工具</span></div>
+      <div class="cat-name">文本格式</div>
+      <div class="cat-tools">JSON · YAML · SQL · Markdown</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-amber">⏰</div><span class="cat-count cc-amber">4 个工具</span></div>
+      <div class="cat-name">时间随机</div>
+      <div class="cat-tools">时间戳 · UUID · 密码 · 二维码</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-pink">🎨</div><span class="cat-count cc-pink">5 个工具</span></div>
+      <div class="cat-name">图片工具</div>
+      <div class="cat-tools">水印 · 裁剪 · 压缩 · Favicon</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-red">🔐</div><span class="cat-count cc-red">4 个工具</span></div>
+      <div class="cat-name">安全加密</div>
+      <div class="cat-tools">JWT · Hash · AES</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-purple">🚀</div><span class="cat-count cc-purple">7 个工具</span></div>
+      <div class="cat-name">运维部署</div>
+      <div class="cat-tools">Nginx · Docker · Cron · IP</div>
+      <span class="cat-arrow">→</span>
+    </div>
+    <div class="cat-card">
+      <div class="cat-top"><div class="cat-icon ic-cyan">🧰</div><span class="cat-count cc-cyan">5 个工具</span></div>
+      <div class="cat-name">开发辅助</div>
+      <div class="cat-tools">正则 · 颜色 · CSS · HTTP 状态</div>
+      <span class="cat-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- 分组工具列表 -->
+<section class="container">
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">📦</span><h3>编码转换</h3><span class="g-count">4 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">🔤</div><div class="t-body"><div class="t-name">Base64 编解码器</div><div class="t-desc">文本与图片 Base64 编码/解码</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔗</div><div class="t-body"><div class="t-name">URL 编解码</div><div class="t-desc">URL 编码解码与参数解析</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔢</div><div class="t-body"><div class="t-name">进制转换</div><div class="t-desc">二/八/十/十六进制互转</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔀</div><div class="t-body"><div class="t-name">命名风格转换</div><div class="t-desc">camelCase / snake_case 互转</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">📝</span><h3>文本格式</h3><span class="g-count">8 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">📋</div><div class="t-body"><div class="t-name">JSON 格式化工具</div><div class="t-desc">格式化 / 压缩 / 转义 / 语法校验</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔄</div><div class="t-body"><div class="t-name">YAML ↔ JSON</div><div class="t-desc">双向转换，保留结构语义</div></div></div>
+      <div class="tool-card"><div class="t-icon">📊</div><div class="t-body"><div class="t-name">CSV ↔ JSON</div><div class="t-desc">表格数据双向转换</div></div></div>
+      <div class="tool-card"><div class="t-icon">⚙️</div><div class="t-body"><div class="t-name">Env 文件转换</div><div class="t-desc">.env 与 JSON / YAML 互转</div></div></div>
+      <div class="tool-card"><div class="t-icon">🗄️</div><div class="t-body"><div class="t-name">SQL 格式化工具</div><div class="t-desc">多方言 SQL 美化与压缩</div></div></div>
+      <div class="tool-card"><div class="t-icon">📖</div><div class="t-body"><div class="t-name">Markdown 预览</div><div class="t-desc">实时渲染与 HTML 导出</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔍</div><div class="t-body"><div class="t-name">文本对比 Diff</div><div class="t-desc">逐行/逐字符差异高亮</div></div></div>
+      <div class="tool-card"><div class="t-icon">🧭</div><div class="t-body"><div class="t-name">JSON Path 查询</div><div class="t-desc">JSONPath 提取与求值</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">⏰</span><h3>时间随机</h3><span class="g-count">4 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">🕐</div><div class="t-body"><div class="t-name">Unix 时间戳转换</div><div class="t-desc">时间戳与日期字符串双向转换</div></div></div>
+      <div class="tool-card"><div class="t-icon">🆔</div><div class="t-body"><div class="t-name">UUID 生成器</div><div class="t-desc">批量生成 v4 UUID</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔑</div><div class="t-body"><div class="t-name">密码生成器</div><div class="t-desc">可配置强度随机密码</div></div></div>
+      <div class="tool-card"><div class="t-icon">📱</div><div class="t-body"><div class="t-name">二维码生成器</div><div class="t-desc">文本 / URL 生成二维码</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">🎨</span><h3>图片工具</h3><span class="g-count">5 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">💧</div><div class="t-body"><div class="t-name">图片加水印</div><div class="t-desc">文字 / Logo 水印，拖拽定位</div></div></div>
+      <div class="tool-card"><div class="t-icon">✂️</div><div class="t-body"><div class="t-name">图片裁剪旋转</div><div class="t-desc">方形 / 圆形裁剪，旋转翻转</div></div></div>
+      <div class="tool-card"><div class="t-icon">🗜️</div><div class="t-body"><div class="t-name">图片压缩转换</div><div class="t-desc">压缩与 PNG/JPEG/WebP 转换</div></div></div>
+      <div class="tool-card"><div class="t-icon">🌟</div><div class="t-body"><div class="t-name">Favicon 生成器</div><div class="t-desc">多尺寸 ICO 与 PNG 生成</div></div></div>
+      <div class="tool-card"><div class="t-icon">🪄</div><div class="t-body"><div class="t-name">AI 图片去水印</div><div class="t-desc">本地 AI 模型去除图片水印</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">🔐</span><h3>安全加密</h3><span class="g-count">4 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">🔓</div><div class="t-body"><div class="t-name">JWT 解码器</div><div class="t-desc">解析 Header / Payload 与验签</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔏</div><div class="t-body"><div class="t-name">JWT 生成器</div><div class="t-desc">HS256/384/512 签发 Token</div></div></div>
+      <div class="tool-card"><div class="t-icon">#️⃣</div><div class="t-body"><div class="t-name">Hash 计算器</div><div class="t-desc">MD5 / SHA1 / SHA256 / SHA512</div></div></div>
+      <div class="tool-card"><div class="t-icon">🛡️</div><div class="t-body"><div class="t-name">AES 加密解密</div><div class="t-desc">AES-GCM 对称加解密</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">🚀</span><h3>运维部署</h3><span class="g-count">7 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">🌐</div><div class="t-body"><div class="t-name">Nginx 配置生成器</div><div class="t-desc">反向代理 / HTTPS / 负载均衡</div></div></div>
+      <div class="tool-card"><div class="t-icon">🐳</div><div class="t-body"><div class="t-name">Docker Compose 生成器</div><div class="t-desc">可视化编排 compose.yml</div></div></div>
+      <div class="tool-card"><div class="t-icon">⏱️</div><div class="t-body"><div class="t-name">Cron 表达式生成器</div><div class="t-desc">可视化编辑与执行时间预览</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔒</div><div class="t-body"><div class="t-name">Chmod 计算器</div><div class="t-desc">权限数字与符号互转</div></div></div>
+      <div class="tool-card"><div class="t-icon">🔌</div><div class="t-body"><div class="t-name">端口查询</div><div class="t-desc">常见服务端口用途速查</div></div></div>
+      <div class="tool-card"><div class="t-icon">🧮</div><div class="t-body"><div class="t-name">IP 子网计算器</div><div class="t-desc">CIDR 换算与网段划分</div></div></div>
+      <div class="tool-card"><div class="t-icon">🌀</div><div class="t-body"><div class="t-name">Curl 转换器</div><div class="t-desc">cURL 与代码片段互转</div></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><span class="g-emoji">🧰</span><h3>开发辅助</h3><span class="g-count">5 个工具</span></div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="t-icon">🔍</div><div class="t-body"><div class="t-name">正则表达式测试器</div><div class="t-desc">实时匹配高亮与分组捕获</div></div></div>
+      <div class="tool-card"><div class="t-icon">📡</div><div class="t-body"><div class="t-name">HTTP 状态码速查</div><div class="t-desc">1xx–5xx 全量中文说明</div></div></div>
+      <div class="tool-card"><div class="t-icon">📐</div><div class="t-body"><div class="t-name">JSON → TypeScript</div><div class="t-desc">JSON 生成类型定义</div></div></div>
+      <div class="tool-card"><div class="t-icon">🎨</div><div class="t-body"><div class="t-name">CSS 生成器</div><div class="t-desc">渐变 / 阴影 / 圆角可视化生成</div></div></div>
+      <div class="tool-card"><div class="t-icon">🌈</div><div class="t-body"><div class="t-name">颜色转换器</div><div class="t-desc">HEX / RGB / HSL 互转</div></div></div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <em>ⓘ</em>
+    <span>所有工具均在浏览器本地运行，<b>不会上传任何数据到服务器</b>，可放心使用。更多工具持续开发中，欢迎提需求。</span>
+  </div>
+
+</section>
+
+</body>
+</html>
