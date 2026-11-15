@@ -183,6 +183,9 @@ function render() {
   ctx.beginPath()
   ctx.rect(0, 0, c.width, c.height)
   if (isCircle) {
+    // 必须先 moveTo 到弧起点：rect 后当前点在 (0,0)，直接 arc 会连出一条斜线
+    // 导致 evenodd 挖洞失效、选区外四角漏遮罩
+    ctx.moveTo(cx + radius, cy)
     ctx.arc(cx, cy, radius, 0, Math.PI * 2)
   } else {
     ctx.rect(s.x, s.y, s.w, s.h)
@@ -228,15 +231,26 @@ function render() {
     ctx.strokeRect(s.x + 1, s.y + 1, s.w - 2, s.h - 2)
   }
 
-  // 四角手柄（包围盒角点，两种模式共用）
+  // 手柄：矩形画在包围盒角点；圆形画在圆周 45° 点，避免贴边被裁剪或脱离圆形
   ctx.fillStyle = '#ffffff'
-  const corners: [number, number][] = [
-    [s.x, s.y],
-    [s.x + s.w, s.y],
-    [s.x, s.y + s.h],
-    [s.x + s.w, s.y + s.h],
-  ]
-  for (const [px, py] of corners) {
+  let handles: [number, number][]
+  if (isCircle) {
+    const hx = radius / Math.SQRT2
+    handles = [
+      [cx - hx, cy - hx],
+      [cx + hx, cy - hx],
+      [cx - hx, cy + hx],
+      [cx + hx, cy + hx],
+    ]
+  } else {
+    handles = [
+      [s.x, s.y],
+      [s.x + s.w, s.y],
+      [s.x, s.y + s.h],
+      [s.x + s.w, s.y + s.h],
+    ]
+  }
+  for (const [px, py] of handles) {
     ctx.fillRect(px - 5, py - 5, 10, 10)
   }
 }
@@ -260,6 +274,20 @@ function pos(e: PointerEvent) {
 function hit(px: number, py: number): HandleMode {
   const s = sel.value
   const t = 12
+  if (shape.value === 'circle') {
+    const cx = s.x + s.w / 2
+    const cy = s.y + s.h / 2
+    const r = Math.min(s.w, s.h) / 2
+    const hx = r / Math.SQRT2
+    if (Math.abs(px - (cx - hx)) <= t && Math.abs(py - (cy - hx)) <= t) return 'nw'
+    if (Math.abs(px - (cx + hx)) <= t && Math.abs(py - (cy - hx)) <= t) return 'ne'
+    if (Math.abs(px - (cx - hx)) <= t && Math.abs(py - (cy + hx)) <= t) return 'sw'
+    if (Math.abs(px - (cx + hx)) <= t && Math.abs(py - (cy + hx)) <= t) return 'se'
+    const dx = px - cx
+    const dy = py - cy
+    if (dx * dx + dy * dy <= r * r) return 'move'
+    return 'new'
+  }
   if (Math.abs(px - s.x) <= t && Math.abs(py - s.y) <= t) return 'nw'
   if (Math.abs(px - (s.x + s.w)) <= t && Math.abs(py - s.y) <= t) return 'ne'
   if (Math.abs(px - s.x) <= t && Math.abs(py - (s.y + s.h)) <= t) return 'sw'
